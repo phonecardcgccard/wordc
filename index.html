@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word Match - 中英文单词消消乐</title>
+    <title>Word Match - English-Chinese Vocabulary Game</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -61,14 +61,18 @@
             grid-template-columns: 1fr 1fr;
             gap: 0.5rem;
         }
+        
+        .chinese-font {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
     <div class="container mx-auto px-4 py-8">
         <header class="text-center mb-8">
             <h1 class="text-4xl font-bold text-indigo-800 mb-2">Word Match</h1>
-            <p class="text-lg text-indigo-600">中英文单词消消乐</p>
-            <p class="text-sm text-indigo-400 mt-2">当前词库: <span id="currentSet">1</span>/10</p>
+            <p class="text-lg text-indigo-600">English-Chinese Vocabulary Game</p>
+            <p class="text-sm text-indigo-400 mt-2">Current Set: <span id="currentSet">1</span>/10</p>
         </header>
 
         <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
@@ -76,21 +80,21 @@
             <div class="bg-indigo-700 text-white p-4 flex flex-col md:flex-row justify-between items-center">
                 <div class="flex items-center space-x-4 mb-4 md:mb-0">
                     <button id="newGameBtn" class="bg-white text-indigo-700 px-4 py-2 rounded-lg font-medium hover:bg-indigo-100 transition">
-                        <i class="fas fa-redo mr-2"></i>新游戏
+                        <i class="fas fa-redo mr-2"></i>New Game
                     </button>
                 </div>
                 
                 <div class="flex items-center space-x-6">
                     <div class="text-center">
-                        <div class="text-sm opacity-80">得分</div>
+                        <div class="text-sm opacity-80">Score</div>
                         <div id="score" class="text-2xl font-bold">0</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-sm opacity-80">剩余</div>
+                        <div class="text-sm opacity-80">Remaining</div>
                         <div id="remaining" class="text-2xl font-bold">20</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-sm opacity-80">时间</div>
+                        <div class="text-sm opacity-80">Time</div>
                         <div id="timer" class="text-2xl font-bold">00:00</div>
                     </div>
                 </div>
@@ -124,7 +128,7 @@
                     <p id="messageText" class="text-lg mb-6"></p>
                     <div id="messageStats" class="mb-4 text-left"></div>
                     <button id="messageBtn" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
-                        继续
+                        Continue
                     </button>
                 </div>
             </div>
@@ -301,7 +305,7 @@
                 { english: "sunny", chinese: "晴朗" },
                 { english: "cloudy", chinese: "多云" },
                 { english: "rain", chinese: "雨" },
-                { english: "snow", chinese: "雪" },
+                { english: "s snow", chinese: "雪" },
                 { english: "wind", chinese: "风" },
                 { english: "storm", chinese: "暴风雨" },
                 { english: "fog", chinese: "雾" },
@@ -452,6 +456,7 @@
             // Create Chinese cards
             shuffledChinese.forEach((word, index) => {
                 const chineseCard = createCard(word.chinese, 'chinese', word.english);
+                chineseCard.classList.add('chinese-font');
                 elements.chineseColumn.appendChild(chineseCard);
             });
         }
@@ -569,13 +574,13 @@
             
             if (isWin) {
                 showMessage(
-                    '恭喜!', 
-                    `你成功配对了所有单词!`,
+                    'Congratulations!', 
+                    `You've matched all word pairs successfully!`,
                     'fa-trophy',
-                    `得分: ${gameState.score}<br>
-                     用时: ${formatTime(gameState.timer)}<br>
-                     移动次数: ${gameState.moves}<br>
-                     准确率: ${Math.round((20 / gameState.moves) * 100)}%`
+                    `Score: ${gameState.score}<br>
+                     Time: ${formatTime(gameState.timer)}<br>
+                     Moves: ${gameState.moves}<br>
+                     Accuracy: ${Math.round((20 / gameState.moves) * 100)}%`
                 );
             }
         }
@@ -592,7 +597,7 @@
         function formatTime(seconds) {
             const mins = Math.floor(seconds / 60);
             const secs = seconds % 60;
-            return `${mins}分${secs}秒`;
+            return `${mins}m ${secs}s`;
         }
 
         // Event listeners
